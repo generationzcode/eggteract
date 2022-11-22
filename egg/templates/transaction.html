@@ -8,14 +8,11 @@
     <h1>
       Transact here
     </h1>
-    <input type="text" id="x" placeholder='x coordinate of plot'>,
-    <input type="text" id="y" placeholder='y coordinate of plot'><br>
-    <input type="text" id="key1" placeholder="recipient key part 1">
-    <input type="text" id="key2" placeholder="recipient key part 2">
-    <button id="submit"> TRANSACT!!!! </button>
+    <input type="text" id="text" placeholder='the text you want to send'>
+    <button id="submit"> Send message! </button>
     <script>
       function transaction(){
-          if (window.location.href.substr(8,6) == "eggnft"){
+          if (window.location.href.substr(8,9) == "eggteract"){
             fetch("/make_transaction", {
               method: 'POST',
               credentials: 'same-origin',
@@ -23,11 +20,10 @@
                   'Accept': 'application/json',
                   'X-Requested-With': 'XMLHttpRequest',
               },
-              body: JSON.stringify({'plot':[parseInt(document.getElementById("x").value),parseInt(document.getElementById("y").value)],
-                                   'key1':document.getElementById("key1").value,'key2':document.getElementById("key2").value})
+              body: JSON.stringify({'text':document.getElementById("text").value})
             })
             .then(response => {
-              location.reload();
+              window.location.replace("./view_text");
             }) 
           }
         }

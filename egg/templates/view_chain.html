@@ -3,6 +3,27 @@
     <title>EggzRule</title>
   </head>
   <body>
-    <!--p5js here-->
+  MESSAGES FROM BLOCK YET NOT MINED:
+  
+    {% for i in texts1 %}
+    <div>
+      <span class="coords" id="{{i}}">{{i.owner}} , says -> {{i.text}}</span>
+    </div>
+    <br>
+    {% endfor %}
+	<br>
+  MOST RECENT BLOCKS MINED:
+    
+    {% for v in texts2 %}
+		<br>
+		
+		
+		{% for i in v %}
+    <div>
+      <span class="coords" id="{{i}}">{{i.owner}} , said -> {{i.text}}</span>
+    </div>
+    <br>
+		{% endfor %}
+    {% endfor %}
   </body>
 </html>

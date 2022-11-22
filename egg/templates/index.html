@@ -11,20 +11,20 @@
     <span id="network-host">
       {{network_url}}
     </span>
+		<style>
+			#init{
+				background-color:green
+			}
+		</style>
     <!-- initialize will be optional -->
     <div class="button" id="init" >Initialize Blockchain</div>
-    <div class="button not"><a href="/assets">View *your* plots</a></div>
-    <div class="button not">View *your* key</div>
-    <div class="button not">View the Virtual World</div>
+    <div class="button not"><a href="/view_text">view everyone's messages</a></div>
+      <br>
+      <br>
     <div class="button not" id="mine">Mine a new block!</div>
+<br><br>
+    <div class="button not"><a href="/transaction_form"">write a message</a></div>
 
-    <div class="button not"><a href="/transaction_form"">Make a transaction</a></div>
-
-    <div class="button not">Make a transaction</div>
-    <span class="network-head">Change your network -> </span>
-    <input type="text" id='owner' placeholder="network owner name">
-    <input type="text" id='host_url' placeholder="network host url">
-    <button id="submit">Change your network!</button>
     <script>
         var initialize = document.getElementById("initialized").innerText;
         if (initialize == "False") {
@@ -36,7 +36,7 @@
             document.getElementById("init").style.visibility = 'hidden'
         }
         function init(){
-          if (window.location.href.substr(8,6) == "eggnft"){
+          if (window.location.href.substr(8,9) == "eggteract"){
             fetch("/initialize", {
               method: 'POST',
               credentials: 'same-origin',
@@ -52,7 +52,7 @@
           }
         }
         function network(){
-          if (window.location.href.substr(8,6) == "eggnft"){
+          if (window.location.href.substr(8,9) == "eggteract"){
             fetch("/change_network", {
               method: 'POST',
               credentials: 'same-origin',
@@ -70,13 +70,13 @@
         }
       var mined=false
       function mine(){
-          if ((window.location.href.substr(8,6) == "eggnft")&&(mined==false)){
+          if ((window.location.href.substr(8,9) == "eggteract")&&(mined==false)){
             mined=true
-            document.getElementById("mine").innerHTML='(mining new block...) check on the console if its done mining then reload and mine again if u wish. '
+            document.getElementById("mine").innerHTML='(mining new block...)'
             fetch("/mine", {
               method: 'POST',
               credentials: 'same-origin',
-            })
+            }).then((response)=>document.getElementById("mine").innerHTML='Block has been mined')
           }
         }
         document.getElementById("mine").addEventListener("click", mine, true);
