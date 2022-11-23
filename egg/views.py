@@ -359,12 +359,15 @@ def store_peers(peers):
   this converts a list of peers to json and stores it in a json file
   """
     personal_data = read_personal_data()[0]
-    pop_num='e'
+    pop_num=[]
     for v,i in enumerate(peers):
         if i[0] == personal_data:
-            pop_num = v
-    if pop_num!='e':
-        peers.pop(pop_num)
+            pop_num.append(v)
+        if len(i)==1:
+            pop_num.append(v)
+    if len(pop_num)>0:
+        for i in pop_num:
+            peers.pop(i)
     with open("peers.json", "w") as outfile:
         json.dump(peers, outfile)
     return True
@@ -652,7 +655,7 @@ class Plots():
     		"""
         length = int(requests.post(peer + "chain_length").text)
         for i in range(length):
-            block = from_json(requests.post(peer + "block_num", {'index': str(i)}))
+            block = from_json(requests.post(peer + "block_num", {'index': str(i)}).text)
             if i > 0:
                 if hash_txt(block['hash'] + str(block["nonce"])
                             )[:self.difficulty] != generate_zero_string(
