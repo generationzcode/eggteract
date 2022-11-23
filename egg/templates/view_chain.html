@@ -3,27 +3,58 @@
     <title>EggzRule</title>
   </head>
   <body>
+      <style>
+          h2{
+              margin-left:50%;
+          }
+          body{
+              background-color:#e693b8;
+              font-family:sans-serif;
+          }
+          .block{
+              border:5px solid #eb2d8b;
+              border-radius:5px;
+              padding: 30px;
+              margin: auto;
+              width:70%;
+              background-color:#77DD77;
+          }
+          .coords{
+              border:5px solid #07456b;
+              border-radius:5px;
+              background-color:#804be3;
+              color:white;
+              padding: 5px;
+          }
+      </style>
   MESSAGES FROM BLOCK YET NOT MINED:
   
-    {% for i in texts1 %}
-    <div>
-      <span class="coords" id="{{i}}">{{i.owner}} , says -> {{i.text}}</span>
-    </div>
-    <br>
-    {% endfor %}
+      <br>
+		
+		<div class='block'>
+            <ul>
+		{% for i in texts1 %}
+      <li class="coords" id="{{i}}">{{i.owner}} , said -> {{i.text}}</li>
+       <br>     
+		{% endfor %}
+            </ul>
+        </div>
 	<br>
   MOST RECENT BLOCKS MINED:
     
     {% for v in texts2 %}
-		<br>
 		
-		
+		<div class='block'>
+            <ul>
 		{% for i in v %}
-    <div>
-      <span class="coords" id="{{i}}">{{i.owner}} , said -> {{i.text}}</span>
-    </div>
-    <br>
+      <li class="coords" id="{{i}}">{{i.owner}} , said -> {{i.text}}</li>
+       <br>     
 		{% endfor %}
+            </ul>
+        </div>
+    <h2>
+        👇
+    </h2>
     {% endfor %}
   </body>
 </html>

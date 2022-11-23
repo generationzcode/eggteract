@@ -12,11 +12,26 @@
       {{network_url}}
     </span>
 		<style>
-			#init{
-				background-color:green
+            body{
+                background-color:#e693b8;
+              font-family:sans-serif;
+            }
+			div{
+				background-color:green;
+                width: 20em;
+                padding: 10px;
+                border:3px solid #02360b;
+                border-radius:2px;
+                margin: auto;
+                cursor:pointer;
+                
 			}
+            #init:hover{
+                background: color #019119;
+            }
 		</style>
     <!-- initialize will be optional -->
+      <br>
     <div class="button" id="init" >Initialize Blockchain</div>
     <div class="button not"><a href="/view_text">view everyone's messages</a></div>
       <br>
@@ -76,7 +91,8 @@
             fetch("/mine", {
               method: 'POST',
               credentials: 'same-origin',
-            }).then((response)=>document.getElementById("mine").innerHTML='Block has been mined')
+            }).then((response)=>{document.getElementById("mine").innerHTML='Block has been mined';
+                                setTimeout(() => { location.reload() }, 2000);})
           }
         }
         document.getElementById("mine").addEventListener("click", mine, true);

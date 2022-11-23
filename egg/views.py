@@ -360,16 +360,22 @@ def store_peers(peers):
   """
     personal_data = read_personal_data()[0]
     pop_num=[]
+    new_peers = []
     for v,i in enumerate(peers):
         if i[0] == personal_data:
             pop_num.append(v)
         if len(i)==1:
             pop_num.append(v)
     if len(pop_num)>0:
-        for i in pop_num:
-            peers.pop(i)
+        for i,m in enumerate(peers):
+            popped = False
+            for v in pop_num:
+                if i == v:
+                    popped = True
+            if not(popped):
+                new_peers.append(m)
     with open("peers.json", "w") as outfile:
-        json.dump(peers, outfile)
+        json.dump(new_peers, outfile)
     return True
 
 
@@ -505,29 +511,36 @@ class Plots():
                 if found != True:
                     peers_known.append(v)
         store_peers(peers_known)
-
+        peers_to_remove = []
         for i in peers:
-            foreign_len = int(requests.post(i[0] + "chain_length").text)
-            if foreign_len > length:
-                print(self.check_blockchain(i[0]))
-                if self.check_blockchain(i[0]) == True:
-                    remove_block_db()
-                    running = True
-                    v = 0
-                    while running == True:
-                        server_response = requests.post(
-                            i[0] + "block_num", {
-                                "index": str(v)
-                            }).text
-                        if server_response == "Done":
-                            running = False
-                            break
-                        print(server_response)
-                        write_block_db(from_json(server_response))
-                        v+=1
-
-                    got = True
-                    length = foreign_len
+            try:
+                foreign_len = int(requests.post(i[0] + "chain_length").text)
+                if foreign_len > length:
+                    print(self.check_blockchain(i[0]))
+                    if self.check_blockchain(i[0]) == True:
+                        remove_block_db()
+                        running = True
+                        v = 0
+                        while running == True:
+                            server_response = requests.post(
+                                i[0] + "block_num", {
+                                    "index": str(v)
+                                }).text
+                            if server_response == "Done":
+                                running = False
+                                break
+                            print(server_response)
+                            write_block_db(from_json(server_response))
+                            v+=1
+    
+                        got = True
+                        length = foreign_len
+            except:
+                print('incorrect peer')
+                peers_to_remove.append(i)
+        for i in peers_to_remove:
+            peers.remove(i)
+        store_peers(peers)        
         if (got == False) and (length == 0):
             write_block_db({
                 "index": 0,
@@ -822,11 +835,8 @@ def change_network(request):
 
 
 def view_text(request):
-		listz = []
-		for i in Blockchain.objects.all().order_by('-id')[:10]:
-			listz.append(json.loads(i.transactions))
-		return render(
-        request, "view_chain.html", {
-            'texts1': the_plots.current_transactions,
-            'texts2':listz
-        })
+    listz = []
+    for i in Blockchain.objects.all().order_by('-id')[:10]:
+	    listz.append(json.loads(i.transactions))
+    listz.pop(0)
+    return render(request, "view_chain.html", {'texts1': the_plots.current_transactions,'texts2':listz})

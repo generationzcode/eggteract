@@ -5,12 +5,50 @@
     </title>
   </head>
   <body>
-    <h1>
-      Transact here
+    <h1 color="white">
+      Say something🧲🐴⛓:
     </h1>
+      <style>
+          button{
+              padding: 10px;
+              background-color:#569c61;
+              color: white;
+              cursor:pointer;
+                border: none;
+                border-radius: 5px;
+          }
+          button:hover{
+                background-color:#73fa89;
+            }
+          button:focus{
+              background-color:#04b521;
+              
+          }
+          h1{
+              color:white;
+          }
+            body{
+                background-color:#e693b8;
+              font-family:sans-serif;
+            }
+			input{
+                padding: 10px;
+                width:60%;
+                border: none;
+                border-radius: 5px;
+            }
+            input:hover{
+                border: 1px solid #73fa89;
+            }
+          input:focus{
+              border: 1px solid #04b521;
+              
+          }
+		</style>
     <input type="text" id="text" placeholder='the text you want to send'>
     <button id="submit"> Send message! </button>
     <script>
+        
       function transaction(){
           if (window.location.href.substr(8,9) == "eggteract"){
             fetch("/make_transaction", {
