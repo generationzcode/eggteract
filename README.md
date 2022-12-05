@@ -1,3 +1,7 @@
+# THIS IS USED IN MY CBSE COMPUTER SCIENCE PROJECT
+
+
+
 Below is my attempt to create a decentralized microblogging (like twitter) platform using blockchain technology (same stuff that runs bitcoin). This is again purely for educational use as the proof of work is really easy to solve. This is also probably the last chain I'll make using my own code on replit. I really want to work with something more robust in the future.
 
 This platform is prone to errors, I'm a one man team experimenting with blockchains so it's expected.
